@@ -31,15 +31,15 @@ export class RegistersController {
   }
 
   @Patch(':id')
-  update(
+  async update(
     @Param('id') id: string,
     @Body() updateRegisterDto: UpdateRegisterDto,
   ) {
-    return this.registersService.update(id, updateRegisterDto);
+    return await this.registersService.update(id, updateRegisterDto);
   }
 
   @Delete(':id')
-  remove(@Param('id') id: string) {
-    return this.registersService.remove(+id);
+  async remove(@Param('id') id: string) {
+    return await this.registersService.remove(id);
   }
 }

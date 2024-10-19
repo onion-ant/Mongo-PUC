@@ -46,7 +46,7 @@ export class RegistersService {
   ): Promise<OneRegisterDto> {
     if (!isValidObjectId(id))
       throw new HttpException('Invalid id', HttpStatus.BAD_REQUEST);
-    const upToDateRegister = this.registerModel
+    const upToDateRegister = await this.registerModel
       .findByIdAndUpdate(id, updateRegisterDto, { new: true })
       .exec();
     return plainToInstance(OneRegisterDto, upToDateRegister, {
@@ -54,7 +54,14 @@ export class RegistersService {
     });
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} register`;
+  async remove(id: string): Promise<OneRegisterDto> {
+    if (!isValidObjectId(id))
+      throw new HttpException('Invalid id', HttpStatus.BAD_REQUEST);
+    const deletedRegister = await this.registerModel
+      .findByIdAndDelete(id)
+      .exec();
+    return plainToInstance(OneRegisterDto, deletedRegister, {
+      excludeExtraneousValues: true,
+    });
   }
 }
