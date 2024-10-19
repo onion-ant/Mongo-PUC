@@ -40,8 +40,18 @@ export class RegistersService {
     });
   }
 
-  update(id: number, updateRegisterDto: UpdateRegisterDto) {
-    return `This action updates a #${id} register`;
+  async update(
+    id: string,
+    updateRegisterDto: UpdateRegisterDto,
+  ): Promise<OneRegisterDto> {
+    if (!isValidObjectId(id))
+      throw new HttpException('Invalid id', HttpStatus.BAD_REQUEST);
+    const upToDateRegister = this.registerModel
+      .findByIdAndUpdate(id, updateRegisterDto, { new: true })
+      .exec();
+    return plainToInstance(OneRegisterDto, upToDateRegister, {
+      excludeExtraneousValues: true,
+    });
   }
 
   remove(id: number) {
