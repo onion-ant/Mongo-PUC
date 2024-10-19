@@ -16,7 +16,6 @@ async function bootstrap() {
       'Documentação gerada pelo swagger para interação com api nest',
     )
     .setVersion('1.0')
-    .addTag('tasks')
     .build();
 
   const document = SwaggerModule.createDocument(app, config);
