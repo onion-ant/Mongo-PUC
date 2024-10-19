@@ -5,7 +5,7 @@ import { IsEmail, IsNotEmpty, IsPhoneNumber, Matches } from 'class-validator';
 export class CreateRegisterDto {
   @ApiProperty({ required: true, example: 'Antonio Henrique Bertolini Vidal' })
   @IsNotEmpty()
-  @Matches(/^[a-zA-Z\s]+$/, {
+  @Matches(/^[a-zA-ZÀ-ÿ\s]+$/, {
     message: 'Only alphabetic characters are allowed in name.',
   })
   @Transform(({ value }) => value.trim())
