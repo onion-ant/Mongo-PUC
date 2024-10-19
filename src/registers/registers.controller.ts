@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { RegistersService } from './registers.service';
 import { CreateRegisterDto } from './dto/create-register.dto';
 import { UpdateRegisterDto } from './dto/update-register.dto';
@@ -9,6 +17,7 @@ export class RegistersController {
 
   @Post()
   create(@Body() createRegisterDto: CreateRegisterDto) {
+    console.log(createRegisterDto);
     return this.registersService.create(createRegisterDto);
   }
 
@@ -23,7 +32,10 @@ export class RegistersController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateRegisterDto: UpdateRegisterDto) {
+  update(
+    @Param('id') id: string,
+    @Body() updateRegisterDto: UpdateRegisterDto,
+  ) {
     return this.registersService.update(+id, updateRegisterDto);
   }
 
