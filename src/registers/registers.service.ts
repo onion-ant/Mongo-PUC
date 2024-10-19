@@ -4,11 +4,13 @@ import { UpdateRegisterDto } from './dto/update-register.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Register } from './entities/register.entity';
 import { isValidObjectId, Model } from 'mongoose';
-import { ManyRegisterDto } from './dto/many-register.dto';
 import { plainToInstance } from 'class-transformer';
-import { OneRegisterDto } from './dto/one-register.dto';
-import { FindAllRegisterDto } from './dto/findAll-register.dto';
 import { countByEmailRegisterDto } from './dto/countByEmail-register.dto';
+import {
+  FindAllRegisterDto,
+  ManyRegisterDto,
+  OneRegisterDto,
+} from './dto/get-register.dots';
 
 @Injectable()
 export class RegistersService {
