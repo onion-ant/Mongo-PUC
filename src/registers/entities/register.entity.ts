@@ -1,4 +1,4 @@
-import { Prop, Schema } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 
 @Schema()
 export class Register {
@@ -9,3 +9,5 @@ export class Register {
   @Prop({ required: true })
   phone: string;
 }
+
+export const RegisterSchema = SchemaFactory.createForClass(Register);

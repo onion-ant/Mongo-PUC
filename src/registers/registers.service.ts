@@ -1,11 +1,18 @@
 import { Injectable } from '@nestjs/common';
 import { CreateRegisterDto } from './dto/create-register.dto';
 import { UpdateRegisterDto } from './dto/update-register.dto';
+import { InjectModel } from '@nestjs/mongoose';
+import { Register } from './entities/register.entity';
+import { Model } from 'mongoose';
 
 @Injectable()
 export class RegistersService {
-  create(createRegisterDto: CreateRegisterDto) {
-    return 'This action adds a new register';
+  constructor(
+    @InjectModel(Register.name) private registerModel: Model<Register>,
+  ) {}
+  async create(createRegisterDto: CreateRegisterDto): Promise<Register> {
+    const newRegister = new this.registerModel(createRegisterDto);
+    return await newRegister.save();
   }
 
   findAll() {
