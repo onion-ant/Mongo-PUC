@@ -14,7 +14,7 @@ export class CreateRegisterDto {
   @IsNotEmpty()
   @IsEmail()
   email: string;
-  @ApiProperty({ required: true, example: '3199999999' })
+  @ApiProperty({ required: true, example: '31999999999' })
   @IsNotEmpty()
   @IsPhoneNumber('BR')
   phone: string;
