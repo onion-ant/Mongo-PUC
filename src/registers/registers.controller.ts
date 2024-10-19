@@ -25,6 +25,11 @@ export class RegistersController {
     return await this.registersService.findAll();
   }
 
+  @Get('countByEmail')
+  async countByEmail() {
+    return await this.registersService.countByEmail();
+  }
+
   @Get(':id')
   async findOne(@Param('id') id: string) {
     return await this.registersService.findOne(id);

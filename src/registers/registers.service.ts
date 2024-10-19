@@ -8,6 +8,7 @@ import { ManyRegisterDto } from './dto/many-register.dto';
 import { plainToInstance } from 'class-transformer';
 import { OneRegisterDto } from './dto/one-register.dto';
 import { FindAllRegisterDto } from './dto/findAll-register.dto';
+import { countByEmailRegisterDto } from './dto/countByEmail-register.dto';
 
 @Injectable()
 export class RegistersService {
@@ -30,6 +31,18 @@ export class RegistersService {
     });
     response.registersCount = await this.registerModel.countDocuments();
     return response;
+  }
+
+  async countByEmail(): Promise<countByEmailRegisterDto[]> {
+    const registers = await this.registerModel
+      .aggregate([{ $group: { _id: '$email', count: { $sum: 1 } } }])
+      .exec();
+    return registers.map((register) => {
+      const response = new countByEmailRegisterDto();
+      response.email = register._id;
+      response.registersCount = register.count;
+      return response;
+    });
   }
 
   async findOne(id: string): Promise<OneRegisterDto> {
