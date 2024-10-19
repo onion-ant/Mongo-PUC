@@ -4,19 +4,28 @@ import { UpdateRegisterDto } from './dto/update-register.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Register } from './entities/register.entity';
 import { Model } from 'mongoose';
+import { ManyRegisterDto } from './dto/many-register.dto';
+import { plainToInstance } from 'class-transformer';
+import { OneRegisterDto } from './dto/one-register.dto';
 
 @Injectable()
 export class RegistersService {
   constructor(
     @InjectModel(Register.name) private registerModel: Model<Register>,
   ) {}
-  async create(createRegisterDto: CreateRegisterDto): Promise<Register> {
+  async create(createRegisterDto: CreateRegisterDto): Promise<OneRegisterDto> {
     const newRegister = new this.registerModel(createRegisterDto);
-    return await newRegister.save();
+    await newRegister.save();
+    return plainToInstance(OneRegisterDto, newRegister, {
+      excludeExtraneousValues: true,
+    });
   }
 
-  findAll() {
-    return `This action returns all registers`;
+  async findAll(): Promise<ManyRegisterDto[]> {
+    const registers = await this.registerModel.find().lean();
+    return plainToInstance(ManyRegisterDto, registers, {
+      excludeExtraneousValues: true,
+    });
   }
 
   findOne(id: number) {

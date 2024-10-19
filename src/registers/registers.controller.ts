@@ -16,14 +16,13 @@ export class RegistersController {
   constructor(private readonly registersService: RegistersService) {}
 
   @Post()
-  create(@Body() createRegisterDto: CreateRegisterDto) {
-    console.log(createRegisterDto);
-    return this.registersService.create(createRegisterDto);
+  async create(@Body() createRegisterDto: CreateRegisterDto) {
+    return await this.registersService.create(createRegisterDto);
   }
 
   @Get()
-  findAll() {
-    return this.registersService.findAll();
+  async findAll() {
+    return await this.registersService.findAll();
   }
 
   @Get(':id')
