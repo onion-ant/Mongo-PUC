@@ -26,8 +26,8 @@ export class RegistersController {
   }
 
   @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.registersService.findOne(+id);
+  async findOne(@Param('id') id: string) {
+    return await this.registersService.findOne(id);
   }
 
   @Patch(':id')
