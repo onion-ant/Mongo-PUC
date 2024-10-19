@@ -7,6 +7,7 @@ import { isValidObjectId, Model } from 'mongoose';
 import { ManyRegisterDto } from './dto/many-register.dto';
 import { plainToInstance } from 'class-transformer';
 import { OneRegisterDto } from './dto/one-register.dto';
+import { FindAllRegisterDto } from './dto/findAll-register.dto';
 
 @Injectable()
 export class RegistersService {
@@ -21,12 +22,14 @@ export class RegistersService {
     });
   }
 
-  async findAll(): Promise<ManyRegisterDto[]> {
+  async findAll(): Promise<FindAllRegisterDto> {
     const registers = await this.registerModel.find().lean().exec();
-    console.log(registers);
-    return plainToInstance(ManyRegisterDto, registers, {
+    const response = new FindAllRegisterDto();
+    response.registers = plainToInstance(ManyRegisterDto, registers, {
       excludeExtraneousValues: true,
     });
+    response.registersCount = await this.registerModel.countDocuments();
+    return response;
   }
 
   async findOne(id: string): Promise<OneRegisterDto> {
